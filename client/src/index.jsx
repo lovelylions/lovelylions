@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
+import DrawingCanvas from './drawingCanvas.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -8,7 +9,10 @@ class App extends React.Component {
   }
 
   render() {
-    return (<div>React App Entry</div>);
+    return (<div>
+      React App Entry
+      <DrawingCanvas />
+      </div>);
   }
 }
 
