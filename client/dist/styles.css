@@ -1,10 +1,16 @@
 body {
   margin: 0px;
+<<<<<<< HEAD
   font-family: 'Work Sans', sans-serif;
 
 }
 
 .foreground {
+=======
+}
+
+.container {
+>>>>>>> Implement static front-end react mock-up
   position: relative;
   min-height: 1000px;
   min-width: 980px;
@@ -16,7 +22,11 @@ body {
   left: 0;
   bottom: 0;
   right: 0;
+<<<<<<< HEAD
   z-index: -3;
+=======
+  z-index: -2;
+>>>>>>> Implement static front-end react mock-up
   overflow: hidden;
   background-color: #fffdf9;
   color: #DDDDDD;
@@ -34,11 +44,28 @@ body {
   left: 0;
   bottom: 0;
   right: 0;
+<<<<<<< HEAD
   z-index: -2;
+=======
+  z-index: -1;
+>>>>>>> Implement static front-end react mock-up
   width: 100%;
   opacity: .15;
 }
 
+<<<<<<< HEAD
+=======
+.header {
+  background-image: url("./workshop.jpg");
+  /*width: 100%;*/
+  height: 250px;
+  -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+  padding: 15px 13%;
+  text-align: center;
+  font-family: 'Work Sans', sans-serif;
+}
+
+>>>>>>> Implement static front-end react mock-up
 .nav-bar {
   color: #050505;
   text-align: left;
@@ -48,16 +75,25 @@ body {
 
 .nav-bar h1 {
   display: inline;
+<<<<<<< HEAD
   font-size: 36pt;
+=======
+  font-size: 24pt;
+>>>>>>> Implement static front-end react mock-up
 }
 
 .nav-bar a {
   margin: -5px 8px;
+<<<<<<< HEAD
   font-size: 16pt;
+=======
+  font-size: 11pt;
+>>>>>>> Implement static front-end react mock-up
   color: #050505;
   float: right;
 }
 
+<<<<<<< HEAD
 .main-component {
   position: relative;
 }
@@ -87,3 +123,15 @@ body {
   max-width: 100%;
   max-height: auto;
 }
+=======
+.canvas {
+  position: relative;
+  margin: -135px auto;
+  background-image: url("./paper.png");
+  background-size: cover;
+  width: 800px;
+  height: 380px;
+  box-shadow: 0px 30px 40px rgba(0,0,0,.1);
+  border-radius: 9px;
+}
+>>>>>>> Implement static front-end react mock-up
