@@ -1,15 +1,9 @@
 import React from 'react';
-<<<<<<< HEAD
 import ExquisiteWriter from './components/ExquisiteWriter.jsx';
 import DrawCanvas from './components/DrawCanvas.jsx';
 import SignIn from './components/SignIn.jsx';
 import Gallery from './components/Gallery.jsx';
 import ReactDOM from 'react-dom';
-=======
-import ReactDOM from 'react-dom';
-import ExquisiteWriter from './components/ExquisiteWriter.jsx';
-import Navbar from './components/Navbar.jsx'
->>>>>>> Implement static front-end react mock-up
 
 class App extends React.Component {
   constructor(props) {
@@ -43,7 +37,6 @@ class App extends React.Component {
 
   render() {
     return (<div>
-<<<<<<< HEAD
       <div className="foreground">
           <ExquisiteWriter />
           <div className="container">
@@ -56,17 +49,6 @@ class App extends React.Component {
             {this.state.currentView}
           </div>
         </div>
-=======
-      <div className="container">
-          <ExquisiteWriter />
-          <div className="header">
-            <Navbar />
-          </div>
-          <img className="stain" src="stained.png" />
-          <div className="canvas">
-          </div>
-      </div>
->>>>>>> Implement static front-end react mock-up
       </div>);
   }
 }
