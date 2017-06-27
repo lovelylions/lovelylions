@@ -45,12 +45,12 @@ class DrawCanvas extends React.Component {
     this.drawingPoints.push({x: x, y: y, drag: drag})
   }
 
-  redraw() { 
+  redraw() {
     for (var i = 0; i < this.drawingPoints.length; i++) {
       this.context.beginPath();
       this.context.strokeStyle = "#000000";
       this.context.lineJoin = 'round';
-      this.context.lineWidth = 7;    
+      this.context.lineWidth = 7;
 
       if (this.drawingPoints[i].drag && i) {
         this.context.moveTo(this.drawingPoints[i - 1].x, this.drawingPoints[i - 1].y);
@@ -86,8 +86,8 @@ class DrawCanvas extends React.Component {
         <input onClick={this.onEraserClick.bind(this)} type="button" value="Eraser"></input>
         <input onClick={this.onDrawClick.bind(this)} type="button" value="Draw"></input>
         <input onClick={this.clearCanvas.bind(this)} type='button' value="Clear Canvas"></input>
-        <canvas onMouseLeave={this.endDraw.bind(this)} 
-        onMouseMove={this.drawing.bind(this)} onMouseDown={this.startDraw.bind(this)} 
+        <canvas onMouseLeave={this.endDraw.bind(this)}
+        onMouseMove={this.drawing.bind(this)} onMouseDown={this.startDraw.bind(this)}
         onMouseUp={this.endDraw.bind(this)} id='canvas' width={this.width} height={this.height}>
         </canvas>
       </div>
