@@ -62,7 +62,6 @@ class Canvas extends React.Component {
     this.clickY = [];
     this.clickDrag = [];
     this.context.save();
-    event.preventDefault();
   }
 
   componentDidMount() {
@@ -79,7 +78,7 @@ class Canvas extends React.Component {
   render () {
     return (
       <div>
-        <input onClick={this.clearCanvas.bind(this)} type='button' value='Clear Canvas'></input>
+        <input onClick={this.clearCanvas.bind(this)} type='click' value='Clear Canvas'></input>
         <canvas onMouseLeave={this.endDraw.bind(this)} 
         onMouseMove={this.drawing.bind(this)} onMouseDown={this.draw.bind(this)} 
         onMouseUp={this.endDraw.bind(this)} id='canvas' width={this.width} height={this.height}>
