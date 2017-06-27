@@ -72,7 +72,9 @@ class DrawingCanvas extends React.Component {
 
   render () {
     return (
-      <canvas onMouseLeave={this.endDraw.bind(this)} onMouseMove={this.drawing.bind(this)} onMouseDown={this.draw.bind(this)} onMouseUp={this.endDraw.bind(this)} id='canvas' width={this.width} height={this.height}>
+      <canvas onMouseLeave={this.endDraw.bind(this)} 
+      onMouseMove={this.drawing.bind(this)} onMouseDown={this.draw.bind(this)} 
+      onMouseUp={this.endDraw.bind(this)} id='canvas' width={this.width} height={this.height}>
       </canvas>
       )
   }
