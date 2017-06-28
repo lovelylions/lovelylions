@@ -1,10 +1,9 @@
-import ReactDOM from 'react-dom';
+import React from 'react';
 import ExquisiteWriter from './components/ExquisiteWriter.jsx';
 import DrawCanvas from './components/DrawCanvas.jsx';
 import SignIn from './components/SignIn.jsx';
 import Gallery from './components/Gallery.jsx';
-import ReactDOM from 'react-dom'
-import Canvas from './Canvas.jsx'
+import ReactDOM from 'react-dom';
 
 class App extends React.Component {
   constructor(props) {
