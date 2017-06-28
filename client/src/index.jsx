@@ -4,14 +4,8 @@ import DrawCanvas from './components/DrawCanvas.jsx';
 import SignIn from './components/SignIn.jsx';
 import Gallery from './components/Gallery.jsx';
 import ReactDOM from 'react-dom';
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> Implement static front-end react mock-up
-=======
 import Composite from './components/Composite.jsx';
->>>>>>> Add Composite/results component
+
 
 class App extends React.Component {
   constructor(props) {
@@ -29,12 +23,9 @@ class App extends React.Component {
     this.generateImage = this.generateImage.bind(this);
   }
 
-<<<<<<< HEAD
-=======
   componentDidMount() {
     // this.setState({currentView: <Composite pic={this.state.pics[0]} />});
   }
->>>>>>> Add Composite/results component
 
   switch(e) {
     e.preventDefault();
@@ -63,10 +54,6 @@ class App extends React.Component {
   }
 
   render() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Integrate canvas
     return (
       <div>
         <ExquisiteWriter />
@@ -76,37 +63,11 @@ class App extends React.Component {
             <a href="#" onClick={this.switch}>canvas</a>
             <a href="#" onClick={this.switch}>myGallery</a>
             <a href="#" onClick={this.switch}>signIn</a>
-<<<<<<< HEAD
-=======
-    return (<div>
-      <div className="foreground">
-          <ExquisiteWriter />
-          <div className="container">
-            <div className="nav-bar">
-              <h1>Exquisite Corpse</h1>
-              <a href="#" onClick={this.switch}>canvas</a>
-              <a href="#" onClick={this.switch}>myGallery</a>
-              <a href="#" onClick={this.switch}>signIn</a>
-            </div>
-            {this.state.currentView}
->>>>>>> Implement static front-end react mock-up
-          </div>
-          {this.state.currentView}
-        </div>
-<<<<<<< HEAD
-      </div>
-    );
-=======
->>>>>>> Implement static front-end react mock-up
-      </div>);
->>>>>>> Implement static front-end react mock-up
-=======
           </div>
           {this.state.currentView}
         </div>
       </div>
     );
->>>>>>> Integrate canvas
   }
 }
 
