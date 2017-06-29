@@ -26,7 +26,11 @@ class Composite extends React.Component {
   }
 
   regenerate() {
-    this.props.generateImage(this.props.userImage);
+    this.props.generateImage(this.props.pic[this.props.userPart]);
+  }
+
+  saveImage() {
+    this.props.saveImage(this.props.pic, this.props.userPart);
   }
 
   render(){
@@ -36,7 +40,7 @@ class Composite extends React.Component {
         </canvas>
         <div className="button-cluster">
           <button onClick={this.regenerate.bind(this)}>regenerate</button>
-          <button>save</button>
+          <button onClick={this.saveImage.bind(this)}>save</button>
         </div>
       </div>
     );

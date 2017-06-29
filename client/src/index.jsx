@@ -6,28 +6,27 @@ import Gallery from './components/Gallery.jsx';
 import ReactDOM from 'react-dom';
 import Composite from './components/Composite.jsx';
 
+var testURL = '/images/?file=legs.png'
+
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      login: null,
       currentView: <DrawCanvas generateImage={this.generateImage.bind(this)}/>,
-      pics: [
-        {title: 'Title', head: {path:'head.png', artist: 'artist1'}, torso: {path: 'torso.png', artist: 'artist2'}, legs: {path: 'legs.png', artist: 'artist3'}},
-        {title: 'Title', head: {path:'paper.png', artist: 'artist1'}, torso: {path: 'paper.png', artist: 'artist2'}, legs: {path: 'paper.png', artist: 'artist3'}},
-        {title: 'Title', head: {path:'paper.png', artist: 'artist1'}, torso: {path: 'paper.png', artist: 'artist2'}, legs: {path: 'paper.png', artist: 'artist3'}},
-        {title: 'Title', head: {path:'paper.png', artist: 'artist1'}, torso: {path: 'paper.png', artist: 'artist2'}, legs: {path: 'paper.png', artist: 'artist3'}}
-      ]
+      pics: []
     };
-    this.switch = this.switch.bind(this);
+    this.componentSwitch = this.componentSwitch.bind(this);
     this.generateImage = this.generateImage.bind(this);
+    this.saveComposite = this.saveComposite.bind(this);
   }
 
   componentDidMount() {
     // this.setState({currentView: <Composite pic={this.state.pics[0]} />});
   }
 
-  switch(e) {
+  componentSwitch(e) {
     e.preventDefault();
     var targetVal = e.target.innerText;
     if (targetVal === 'signIn') {
@@ -35,22 +34,32 @@ class App extends React.Component {
     } else if (targetVal === 'canvas') {
       this.setState({currentView: <DrawCanvas generateImage={this.generateImage.bind(this)}/>});
     } else if (targetVal === 'myGallery') {
-      this.setState({currentView: <Gallery pics={this.state.pics} />});
+      this.fetchGallery();
     }
+  }
+
+  fetchGallery() {
+    fetch(`/gallery?username=${this.state.login}`).then(res => res.json())
+      .then(galleryImages => this.setState({currentView: <Gallery pics={galleryImages} />}));
   }
 
   generateImage(userImage) {
     var userPart = Object.keys(userImage)[0];
-    // TODO: ajax GET request to server with "param: userPart" path something like
-    //    /generate/?Part=head
-    // should return a pic object with complementing pieces
+    fetch(`/generate?part=${userPart}`).then(res => res.json())
+      .then(generatedImage => {
+        generatedImage[userPart] = userImage[userPart];
+        this.setState({
+          currentView: <Composite pic={generatedImage} userPart={userPart} generateImage={this.generateImage} saveImage={this.saveComposite}/>
+        });
+      });
+  }
 
-    // dummy ajax return vvvvvv
-    var returnedImgObj = {title: 'Title', head: {path:'head.png', artist: 'artist1'}, torso: {path: 'torso.png', artist: 'artist2'}, legs: {path: 'legs.png', artist: 'artist3'}};
-    // dummy ajax return ^^^^^^
-
-    returnedImgObj[userPart] = userImage[userPart];
-    this.setState({currentView: <Composite pic={returnedImgObj} userImage={userImage} generateImage={this.generateImage}/>});
+  saveComposite(compositeImage, userPart) {
+    fetch(`/save?part=${userPart}`, {
+      'method': 'POST',
+      'headers': {'Content-Type': 'application/json'},
+      'body': JSON.stringify(compositeImage)
+    });
   }
 
   render() {
@@ -60,9 +69,9 @@ class App extends React.Component {
         <div className="foreground">
           <div className="nav-bar">
             <h1>cadavre exquis</h1>
-            <a href="#" onClick={this.switch}>canvas</a>
-            <a href="#" onClick={this.switch}>myGallery</a>
-            <a href="#" onClick={this.switch}>signIn</a>
+            <a href="#" onClick={this.componentSwitch}>canvas</a>
+            <a href="#" onClick={this.componentSwitch}>myGallery</a>
+            <a href="#" onClick={this.componentSwitch}>signIn</a>
           </div>
           {this.state.currentView}
         </div>
