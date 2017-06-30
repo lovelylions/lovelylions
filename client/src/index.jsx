@@ -12,7 +12,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      login: 'Saloni',
+      login: null,
       currentView: <DrawCanvas generateImage={this.generateImage.bind(this)}/>,
       pics: []
     };
