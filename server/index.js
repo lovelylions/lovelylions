@@ -82,23 +82,33 @@ app.get('/gallery', (req, res) => {
 app.get('/generate', (req, res) => {
   var userPart = req.query.part;
 
-  var DUMMY_PIC_DATA = {
-    title: 'Title',
-    head: {path:'head.png', artist: 'artist1'},
-    torso: {path: 'torso.png', artist: 'artist2'},
-    legs: {path: 'legs.png', artist: 'artist3'}
-  };
+  // var DUMMY_PIC_DATA = {
+  //   title: 'Title',
+  //   head: {path:'head.png', artist: 'artist1'},
+  //   torso: {path: 'torso.png', artist: 'artist2'},
+  //   legs: {path: 'legs.png', artist: 'artist3'}
+  // };
 
-  res.end(JSON.stringify(DUMMY_PIC_DATA));
+  //call getTwoImages func, pass in userPart;
+  db.getRandomImage('head', (data) => {
+    console.log(data);
+  });
+
+  // res.end(JSON.stringify(DUMMY_PIC_DATA));
 });
 
 app.post('/save', (req, res) => {
-  var base64Data = req.body[req.query.part].path.split(',')[1]
+  var base64Data = req.body[req.query.part].path.split(',')[1];
   var fileName = generateFilename(base64Data);
+  var username = req.body.head.artist;
   fs.writeFile(`./server/images/${fileName}.png`, base64Data, 'base64', (err) => {
     if (err) console.log(err);
+
     req.body[req.query.part].path = `./images/${fileName}`;
-    res.end();
+    let thePath = `./images/${fileName}`;
+    saveImageToFinalImage(req.body, req.query.part, thePath, (data) => {
+      console.log(data);
+    });
   });
 });
 
@@ -107,6 +117,7 @@ app.get('/images', (req, res) => {
   res.sendFile(`${__dirname}/images/${file}`, () => res.end());
 });
 
+// app.get('/testing', (req, res) => {
 
 app.listen(port, function() {
   console.log(`listening on port ${port}!`);
