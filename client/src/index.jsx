@@ -3,12 +3,7 @@ import ExquisiteWriter from './components/ExquisiteWriter.jsx';
 import DrawCanvas from './components/DrawCanvas.jsx';
 import Gallery from './components/Gallery.jsx';
 import ReactDOM from 'react-dom';
-<<<<<<< HEAD
 import Composite from './components/composite.jsx';
-=======
-import Composite from './components/Composite.jsx';
-import $ from 'jquery';
->>>>>>> 'done testing saveImageToFinalImage'
 
 var testURL = '/images/?file=legs.png'
 
@@ -83,7 +78,6 @@ class App extends React.Component {
           <div className="nav-bar">
             <h1>cadavre exquis</h1>
             <a href="#" onClick={this.componentSwitch}>canvas</a>
-<<<<<<< HEAD
             {this.state.login ? (
               <span>
                 <a href="#" onClick={this.componentSwitch}>myGallery</a>
@@ -92,14 +86,6 @@ class App extends React.Component {
             ) : (
               <a href="/auth/facebook" >signIn</a>
             )}
-=======
-            <a href="#" onClick={this.componentSwitch}>myGallery</a>
-            <a href="#" onClick={this.componentSwitch}>signIn</a>
-<<<<<<< HEAD
-            <button onClick={this.clicking.bind(this)}>testttting</button>
->>>>>>> 'done testing saveImageToFinalImage'
-=======
->>>>>>> 'erase all unnecessary part'
           </div>
           {this.state.currentView}
         </div>

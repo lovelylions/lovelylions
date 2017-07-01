@@ -81,18 +81,17 @@ app.get('/gallery', (req, res) => {
 
 app.get('/generate', (req, res) => {
   var userPart = req.query.part;
-
+  console.log('user body part', userPart);
   // var DUMMY_PIC_DATA = {
   //   title: 'Title',
   //   head: {path:'head.png', artist: 'artist1'},
   //   torso: {path: 'torso.png', artist: 'artist2'},
   //   legs: {path: 'legs.png', artist: 'artist3'}
   // };
-
-  //call getTwoImages func, pass in userPart;
-  db.getRandomImage('head', (data) => {
-    console.log(data);
+  db.getTwoImages(userPart, (data) => {
+    res.send(JSON.stringify(data));
   });
+  //call getTwoImages func, pass in userPart;
 
   // res.end(JSON.stringify(DUMMY_PIC_DATA));
 });
@@ -106,9 +105,19 @@ app.post('/save', (req, res) => {
 
     req.body[req.query.part].path = `./images/${fileName}`;
     let thePath = `./images/${fileName}`;
-    saveImageToFinalImage(req.body, req.query.part, thePath, (data) => {
-      console.log(data);
-    });
+    // db.saveImageToFinalImage(req.body, req.query.part, thePath, (data) => {
+    //   res.end();
+    // });
+    console.log('the req body', req.body);
+    console.log('the part', req.query.part);
+    console.log('path', thePath);
+  });
+});
+
+app.get('/testing', (req, res) => {
+  db.saveImageToFinalImage(db.dummyData, 'head', 'testingtestingpath', (data) => {
+    res.send(data);
+    res.end();
   });
 });
 
