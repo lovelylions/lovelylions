@@ -75,21 +75,6 @@ class App extends React.Component {
     }).then(() => this.fetchGallery());
   }
 
-  clicking() {
-    $.ajax({
-      method: 'get',
-      url: '/testing',
-      type: 'json',
-      data: {data: 'something'},
-      success: (data) => {
-        console.log(data);
-      },
-      error: (xhr, error) => {
-        console.log(error);
-      }
-    });
-  }
-
   render() {
     return (
       <div>
@@ -110,8 +95,11 @@ class App extends React.Component {
 =======
             <a href="#" onClick={this.componentSwitch}>myGallery</a>
             <a href="#" onClick={this.componentSwitch}>signIn</a>
+<<<<<<< HEAD
             <button onClick={this.clicking.bind(this)}>testttting</button>
 >>>>>>> 'done testing saveImageToFinalImage'
+=======
+>>>>>>> 'erase all unnecessary part'
           </div>
           {this.state.currentView}
         </div>

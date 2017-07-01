@@ -117,8 +117,6 @@ app.get('/images', (req, res) => {
   res.sendFile(`${__dirname}/images/${file}`, () => res.end());
 });
 
-// app.get('/testing', (req, res) => {
-
 app.listen(port, function() {
   console.log(`listening on port ${port}!`);
 });

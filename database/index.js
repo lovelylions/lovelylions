@@ -41,11 +41,6 @@ let getImage = (id, part, callback) => {
   });
 };
 
-
-
-
-
-
 let getRandomImage = (part,callback) => {
 
   db.any(`select id from ${part} order by id desc limit 1`)
@@ -60,10 +55,6 @@ let getRandomImage = (part,callback) => {
       console.log(error);
   });
 };
-
-
-
-
 
 let getTwoImages = (part, callback) => {
   // provide the part of body and this function will return two random image fragments of the other two parts.
