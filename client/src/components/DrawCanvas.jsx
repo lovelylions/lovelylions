@@ -94,7 +94,7 @@ class DrawCanvas extends React.Component {
     this.context.save();
     this.setState({
       eColor: 'transparent',
-      dColor: 'transparent'
+      dColor: '#33adff'
     })
   }
 
