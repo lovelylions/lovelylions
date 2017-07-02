@@ -10,7 +10,6 @@ var app = express();
 var port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + '/../client/dist'));
-// app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 
@@ -40,8 +39,6 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
 
 
 app.get('/profile', isLoggedIn, function(req, res) {  
-  //console.log(req.user);
-  //res.send(req.user);
   res.redirect('/?username=' + req.user[0]['name']);
 });
 

@@ -37,11 +37,7 @@ CREATE TABLE final_image (
 );
 
 insert into artist (username, email, facebookId, token, name)  values ( 'regina', 'regina@ymail.com', 'reginaFB', 'token1234', 'regina' );
--- insert into artist (username, email)  values ( 'lisa', 'lisa@ymail.com' );
--- insert into artist (username, email)  values ( 'jenny', 'jenny@ymail.com' );
--- insert into artist (username, email)  values ( 'cathy', 'cathy@ymail.com' );
 insert into artist (username, email, facebookId, token, name) values ('dummy', 'dummyemail@test.com', 'dummyuser', 'NA', 'dummyperson');
 insert into torso (_path, user_id )  values ( 'images?path=torso.png', 1 );
 insert into legs (_path, user_id )  values ( 'images?path=legs.png', 1 );
 insert into head (_path, user_id )  values ( 'images?path=head.png', 1 );
--- original database pictures will be using USER ID (1) in artist schema
