@@ -10,7 +10,6 @@ var app = express();
 var port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + '/../client/dist'));
-app.use(express.static(__dirname + '/images'));
 // app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -99,7 +98,7 @@ app.post('/save', (req, res) => {
     if (err) console.log(err);
 
     req.body[req.query.part].path = `./images/${fileName}.png`;
-    let thePath = `${fileName}.png`;
+    let thePath = `images?path=${fileName}.png`;
     db.saveImageToFinalImage(req.body, req.query.part, thePath, (data) => {
       res.end();
     });

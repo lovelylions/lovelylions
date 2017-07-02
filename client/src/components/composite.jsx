@@ -25,6 +25,7 @@ class Composite extends React.Component {
   }
 
   regenerate() {
+    console.log('test2', this.props.pic[this.props.userPart]);
     this.props.generateImage(this.props.pic[this.props.userPart]);
   }
 
