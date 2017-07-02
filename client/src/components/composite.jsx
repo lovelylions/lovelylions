@@ -5,6 +5,7 @@ class Composite extends React.Component {
   componentDidMount() {
     var canvas = document.querySelector('canvas');
     var context = canvas.getContext('2d');
+    console.log(this.props.pic);
     var picObj = this.props.pic;
     var head = new Image(300, 150);
     var torso = new Image(300, 150);
@@ -24,6 +25,7 @@ class Composite extends React.Component {
   }
 
   regenerate() {
+    console.log('test2', this.props.pic[this.props.userPart]);
     this.props.generateImage(this.props.pic[this.props.userPart]);
   }
 
