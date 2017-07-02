@@ -13,6 +13,7 @@ const cn = {
 };
 
 if (process.env.DATABASE_URL) {
+  console.log('connected to heroku postgres db');
   pgp.pg.defaults.ssl = true;
 };
 const db = pgp(process.env.DATABASE_URL || cn);
