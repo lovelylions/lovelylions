@@ -4,7 +4,7 @@ class DrawCanvas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      brushWidth: 5,
+      brushWidth: 15,
       width: 900,
       height: 450,
       erasing: false,
@@ -70,23 +70,31 @@ class DrawCanvas extends React.Component {
   }
 
   redraw() {
-    for (var i = 0; i < this.drawingPoints.length; i++) {
-      this.context.beginPath();
-      this.state.erasing ? this.context.globalCompositeOperation = 'destination-out' : this.context.globalCompositeOperation = 'source-over';
-      this.context.strokeStyle = "#000000";
-      this.context.lineJoin = 'round';
-      this.context.lineWidth = this.state.brushWidth;
-
-      if (this.drawingPoints[i].drag && i) {
-        this.context.moveTo(this.drawingPoints[i - 1].x, this.drawingPoints[i - 1].y);
+      if (this.drawingPoints.length === 1) {
+        this.context.beginPath();
+        this.context.strokeStyle = '#000000 ';
+        this.context.arc(this.drawingPoints[0].x, this.drawingPoints[0].y, Math.floor(this.state.brushWidth / 2), 0, Math.PI * 2);
+        this.context.fill();
       } else {
-        this.context.moveTo(this.drawingPoints[i].x, this.drawingPoints[i].y);
-      }
-      this.context.lineTo(this.drawingPoints[i].x, this.drawingPoints[i].y);
-      this.context.closePath();
+        for (var i = 0; i < this.drawingPoints.length; i++) {
+          this.context.beginPath();
+          this.state.erasing ? this.context.globalCompositeOperation = 'destination-out' : this.context.globalCompositeOperation = 'source-over';
+          this.context.strokeStyle = "#000000 ";
+          this.context.lineJoin = 'round';
+          this.context.lineWidth = this.state.brushWidth;
+
+         if (this.drawingPoints[i].drag && i) {
+            this.context.moveTo(this.drawingPoints[i - 1].x, this.drawingPoints[i - 1].y);
+          } else {
+            this.context.moveTo(this.drawingPoints[i].x, this.drawingPoints[i].y);
+          }
+          this.context.lineTo(this.drawingPoints[i].x, this.drawingPoints[i].y);
+          this.context.closePath();
+        }
+        this.context.stroke();
+
+     }
     }
-    this.context.stroke();
-  }
 
   clearCanvas(event) {
     this.context.clearRect(0, 0, this.state.width, this.state.height);
@@ -128,22 +136,26 @@ class DrawCanvas extends React.Component {
   render () {
     //sets cursor styling
     var style = {}
-    this.state.erasing ? style.cursor = 'url(eraser.cur) 15 15, auto' : style.cursor = 'url(brush.cur), auto'
+    this.state.erasing ? style.cursor = 'url(eraser.cur) 15 15, auto' : style.cursor = 'crosshair'
     return (
       <div className ="draw-canvas">
-        <canvas
-          style={style}
-          onMouseLeave={this.endDraw.bind(this)}
-          onMouseMove={this.drawing.bind(this)} onMouseDown={this.startDraw.bind(this)}
-          onMouseUp={this.endDraw.bind(this)} id='canvas' width={this.state.width} height={this.state.height}>
-        </canvas>
+        <div>
+          <canvas
+            style={style}
+            onMouseLeave={this.endDraw.bind(this)}
+            onMouseMove={this.drawing.bind(this)} onMouseDown={this.startDraw.bind(this)}
+            onMouseUp={this.endDraw.bind(this)} id='canvas' width={this.state.width} height={this.state.height}>
+          </canvas>
+          <img className="overlay" src="paper.png" width="900px" height="450px" />
+          <img className="overlay outline" src={this.state.bodyPart + '.png'} />
+        </div>
         <div className="button-cluster">
           <img style={{'backgroundColor': this.state.eColor}} onClick={this.onEraserClick.bind(this)} className="eraser" src="erasericon.png"></img>
           <img style={{'backgroundColor': this.state.dColor}} onClick={this.onDrawClick.bind(this)} className="drawBrush" src="brushicon.png"></img>
           <input className="clearBtn" onClick={this.clearCanvas.bind(this)} type='button' value="Clear"></input>
           <span>Brush size: {this.state.brushWidth}</span>
-          <input onChange={this.updateBrushWidth.bind(this)} 
-          value={this.state.brushWidth} 
+          <input onChange={this.updateBrushWidth.bind(this)}
+          value={this.state.brushWidth}
           type="range" min="5" max="25" step="1"></input>
         </div>
         <div className="button-cluster">
