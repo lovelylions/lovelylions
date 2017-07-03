@@ -4,7 +4,7 @@ class DrawCanvas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      brushWidth: 15,
+      brushWidth: 7,
       width: 900,
       height: 450,
       erasing: false,
@@ -51,9 +51,9 @@ class DrawCanvas extends React.Component {
   endDraw(event) {
     this.isDrawing = false;
     this.drawingPoints = [];
-    if (this.context.globalCompositeOperation === 'source-over') {
-      this.context.drawImage(this.canvas, 0, 0);
-    }
+    // if (this.context.globalCompositeOperation === 'source-over') {
+    //   //this.context.drawImage(this.canvas, 0, 0);
+    // }
   }
 
   drawing(event) {
@@ -73,6 +73,7 @@ class DrawCanvas extends React.Component {
       if (this.drawingPoints.length === 1) {
         this.context.beginPath();
         this.context.strokeStyle = '#000000 ';
+
         this.context.arc(this.drawingPoints[0].x, this.drawingPoints[0].y, Math.floor(this.state.brushWidth / 2), 0, Math.PI * 2);
         this.context.fill();
       } else {
@@ -121,6 +122,8 @@ class DrawCanvas extends React.Component {
     this.canvas = document.getElementById('canvas');
     this.mouse = document.getElementById('mouseCursor');
     this.context = this.canvas.getContext('2d');
+    this.context.shadowColor = 'black';
+    this.context.shadowBlur = 5;
     this.offsetLeft = this.canvas.offsetLeft;
     this.offsetTop = this.canvas.offsetTop;
     window.onresize = (event => {
