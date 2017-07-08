@@ -15,6 +15,9 @@ app.use(bodyParser.json({limit: '5mb'}));
 
 var path = require('path');
 var favicon = require('serve-favicon');
+
+var pngToIco = require('png-to-ico');
+
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
@@ -46,6 +49,15 @@ app.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
+// test function for icon conversion
+var testConversion = function(){
+  // console.log(__dirname);
+  pngToIco('server/favicon.png')
+    .then(buf => {
+      fs.writeFileSync('server/favicon.ico', buf);
+    })
+    .catch(console.error);
+}
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated())
