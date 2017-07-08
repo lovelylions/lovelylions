@@ -35,7 +35,8 @@ class App extends React.Component {
       fixedLegs: undefined,
       headIsFixed: true,
       torsoIsFixed: false,
-      legsIsFixed: false
+      legsIsFixed: false,
+      view: 'DrawCanvas'
     };
     this.componentSwitch = this.componentSwitch.bind(this);
     this.generateImage = this.generateImage.bind(this);
@@ -58,18 +59,24 @@ class App extends React.Component {
     var test = canvas.toDataURL('image/png', 1.0);
     link.href = test;
     document.getElementsByTagName('head')[0].appendChild(link);
+  } // where?
+
+  componentDidUpdate() {
+    ReactDOM.findDOMNode(this).scrollTop = 0
   }
 
   componentSwitch(e) {
     e.preventDefault();
     var targetVal = e.target.innerText;
     if (targetVal === 'canvas') {
-      this.setState({currentView: <DrawCanvas
-        generateImage={this.generateImage.bind(this)}
-        fixHead={this.fixHead.bind(this)}
-        fixTorso={this.fixTorso.bind(this)}
-        fixLegs={this.fixLegs.bind(this)}
-        />}, ()=>{this.unfixAll()});
+      this.setState({
+        currentView: <DrawCanvas
+          generateImage={this.generateImage.bind(this)}
+          fixHead={this.fixHead.bind(this)}
+          fixTorso={this.fixTorso.bind(this)}
+          fixLegs={this.fixLegs.bind(this)}/>,
+        view: 'DrawCanvas'
+        }, ()=>{this.unfixAll()});
     } else if (targetVal === 'gallery') {
       this.fetchGallery();
     }
@@ -77,7 +84,10 @@ class App extends React.Component {
 
   fetchGallery(artist = this.state.login) {
     fetch(`/gallery?username=${artist}`).then(res => res.json())
-      .then(galleryImages => this.setState({currentView: <Gallery galleryOwner={artist} pics={galleryImages} fetchGallery={this.fetchGallery.bind(this)}/>}));
+      .then(galleryImages => this.setState({
+        currentView: <Gallery galleryOwner={artist} pics={galleryImages} fetchGallery={this.fetchGallery.bind(this)}/>,
+        view: 'Gallery'
+      }));
   }
 
   generateImage(userImage) {
@@ -105,7 +115,8 @@ class App extends React.Component {
           legsIsFixed={this.state.legsIsFixed}
           userPartIsFixed={this.userPartIsFixed.bind(this)}
           />,
-          userPart: userPart
+          userPart: userPart,
+          view: 'Composite'
       }, ()=>{this.setFixedPart(userPart, generatedImage[userPart])});
     });
   } else {
@@ -133,7 +144,8 @@ class App extends React.Component {
         torsoIsFixed={this.state.torsoIsFixed}
         legsIsFixed={this.state.legsIsFixed}
         userPartIsFixed={this.userPartIsFixed.bind(this)}
-        />
+        />,
+        view: 'Composite'
     });
   });
   }
@@ -246,25 +258,31 @@ class App extends React.Component {
           <MediaQuery orientation='portrait'>
             <ExquisiteWriter />
             <div className='portrait'></div>
-          </MediaQuery>
-          <MediaQuery orientation='landscape'>
-            <ExquisiteWriter />
             <div className="foreground">
-              {this.state.currentView}
-              <div className="nav-bar-mobile">
-              <a href="#" onClick={this.componentSwitch}>canvas</a>
+              <h1>cadavre exquis</h1>
               {this.state.login ? (
-                <span>
-                  <a href="#" onClick={this.componentSwitch}>gallery</a>
+                <span className="mobile-login">
                   <a className="user-button" href="/logout">
                     <span className="login">{this.state.login.toLowerCase()}</span>
                     <span className="logout"></span>
                   </a>
                 </span>
               ) : (
-                <a href="/auth/facebook" >login</a>
+                <a className="mobile-login" href="/auth/facebook" >login</a>
               )}
-            </div>
+          </div>
+          </MediaQuery>
+          <MediaQuery orientation='landscape'>
+            <ExquisiteWriter />
+            <div className="foreground">
+              {console.log(this.state.view)}
+              {this.state.view === 'Gallery' || this.state.view === 'Composite' && (
+                <a href="#" onClick={this.componentSwitch}>canvas</a>
+              )}
+              {this.state.currentView}
+              {this.state.view === 'DrawCanvas' && (
+                <a href="#" className="mobile-gallery-link" onClick={this.componentSwitch}>gallery</a>
+              )}
             </div>
           </MediaQuery>
         </MediaQuery>
