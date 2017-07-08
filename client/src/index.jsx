@@ -43,6 +43,24 @@ class App extends React.Component {
     this.saveComposite = this.saveComposite.bind(this);
   }
 
+  // on mount start polling the canvas
+  componentDidMount() {
+    window.setInterval(()=>{
+      this.updateFave();
+    }, 1000);
+  }
+
+  // update the favicon
+  updateFave() {
+    var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.rel = 'shortcut icon';
+    link.type = 'image/png';
+    var canvas = document.getElementById('canvas');
+    var test = canvas.toDataURL('image/png', 1.0);
+    link.href = test;
+    document.getElementsByTagName('head')[0].appendChild(link);
+  } // where?
+
   componentDidUpdate() {
     ReactDOM.findDOMNode(this).scrollTop = 0
   }
@@ -251,7 +269,7 @@ class App extends React.Component {
                 </span>
               ) : (
                 <a className="mobile-login" href="/auth/facebook" >login</a>
-              )}       
+              )}
           </div>
           </MediaQuery>
           <MediaQuery orientation='landscape'>
@@ -264,8 +282,8 @@ class App extends React.Component {
               {this.state.currentView}
               {this.state.view === 'DrawCanvas' && (
                 <a href="#" className="mobile-gallery-link" onClick={this.componentSwitch}>gallery</a>
-              )}     
-            </div> 
+              )}
+            </div>
           </MediaQuery>
         </MediaQuery>
       </div>
