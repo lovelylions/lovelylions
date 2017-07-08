@@ -1,6 +1,7 @@
 var express = require('express');
 var db = require('../database/index.js');
 var bodyParser = require('body-parser');
+const difference = require('underscore').difference;
 
 var fs = require('fs');
 var crypto = require('crypto');
@@ -14,6 +15,9 @@ app.use(bodyParser.json({limit: '5mb'}));
 
 var path = require('path');
 var favicon = require('serve-favicon');
+
+var pngToIco = require('png-to-ico');
+
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
@@ -45,6 +49,15 @@ app.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
+// test function for icon conversion
+var testConversion = function(){
+  // console.log(__dirname);
+  pngToIco('server/favicon.png')
+    .then(buf => {
+      fs.writeFileSync('server/favicon.ico', buf);
+    })
+    .catch(console.error);
+}
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated())
@@ -69,10 +82,22 @@ app.get('/gallery', (req, res) => {
 });
 
 app.get('/generate', (req, res) => {
-  var userPart = req.query.part;
-  db.getTwoImages(userPart, (data) => {
-    res.send(JSON.stringify(data));
-  });
+  if (req.query.part) {
+    var userPart = req.query.part;
+    var diff = difference(['head', 'torso', 'legs'], [userPart])
+    db.getImages(diff, (data) => {
+      res.send(JSON.stringify(data));
+    });
+  } else {
+    var fixedParts = [];
+    if (req.query.headIsFixed === 'false') { fixedParts.push('head') }
+    if (req.query.torsoIsFixed === 'false') { fixedParts.push('torso') }
+    if (req.query.legsIsFixed === 'false') { fixedParts.push('legs') }
+    console.log('fixedParts', fixedParts);
+    db.getImages(fixedParts, (data) => {
+      res.send(JSON.stringify(data));
+    });
+  }
 });
 
 app.post('/save', (req, res) => {
